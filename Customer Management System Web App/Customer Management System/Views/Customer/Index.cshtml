@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Customer>
+
+    @{
+    ViewData["Title"] = "Index";
+}
+
+@if (TempData["ResultOk"] != null)
+{
+    <h1 class="alert-success">@TempData["ResultOk"]</h1>
+}
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Customer List</h2>
+        </div>
+
+
+
+        <div class="col-4 p-0 justify-content-end">
+          <form class="d-flex asp-controller="Customer" asp-action="Search">
+              <span class="btn btn-group">
+                  <input class="form-control me-sm-2" type="text" name="SearchText" placeholder="SearchKey" />
+                  <input class=""btn btn-secondary my-2 my-sm-0" type="submit" value="Search" />
+              </span>
+          </form>
+      </div>
+
+
+
+
+        <div class="col-6 text-left">
+            <a asp-controller="Customer" asp-action="Create" class="btn btn-primary">
+               <i class="bi bi-plus-circle"></i> &nbsp; Create New Customer
+            </a>
+        </div>
+    </div>
+    <br /><br />
+    @*<div class="col mb-3">
+        <a asp-controller="Customer" asp-action="Create" class="btn btn-lg btn-primary"><i class="bi bi-file-plus-fill"></i>Add Customer</a>
+    </div>*@
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Customer Id</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">City</th>
+                <th scope="col">Age</th>
+                <th scope="col">Phone</th>
+                <th scope="col">PinCode</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td width="20%">
+                        @item.CustomerId
+                    </td>
+                    <td width="20%">
+                        @item.CustomerName
+                    </td>
+                    <td width="20%">
+                        @item.City
+                    </td>
+                    <td width="20%">
+                        @item.Age
+                    </td>
+                    <td width="20%">
+                        @item.Phone
+                    </td>
+                    <td width="25%">
+                        @item.PinCode
+                    </td>
+                   
+                    <td>
+                        <div role="group" class="w-60 btn-group">
+                            <a asp-controller="Customer" asp-action="Edit" asp-route-id="@item.CustomerId" class=" btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Edit</a>&nbsp;
+                            <a asp-controller="Customer" asp-action="Delete" asp-route-id="@item.CustomerId" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i>Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

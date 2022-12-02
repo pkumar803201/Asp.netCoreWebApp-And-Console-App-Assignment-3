@@ -1,0 +1,208 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CustomerManagement
+{
+    class Customer
+    {
+        public int CustomerId { get; set; }
+        public string CustomerName { get; set; }
+        public string City { get;set; }
+        public int  Age { get; set; }
+        public long Phone { get; set; }
+        public int PinCode { get; set; }
+    }
+    class CustomerManagement
+    {
+        IList<Customer> customerList=new List<Customer>();
+        public bool CreateCustomer(int CustId,string CustName,string city,int age,long phone,int pinCode)
+        {
+            Customer customer=new Customer();
+            customer.CustomerId = CustId;
+            customer.CustomerName = CustName;
+            customer.City = city;
+            customer.Age = age;
+            customer.Phone = phone;
+            customer.PinCode = pinCode;
+
+            customerList.Add(customer);
+            return true;
+        }
+        public bool ModifyCustomerDetails(int CustId, string CustName, string city, int age, long phone, int pinCode)
+          {
+            foreach(var customer in customerList)
+            {
+                if(customer.CustomerId == CustId)
+                {
+                    Console.Write(customer.CustomerId+"   ");
+                    Console.Write(customer.CustomerName + "   ");
+                    Console.Write(customer.City + "   ");
+                    Console.Write(customer.Age + "   ");
+                    Console.Write(customer.Phone + "   ");
+                    Console.Write(customer.PinCode + "   ");
+                    Console.WriteLine();
+                    customerList.Remove(customer);
+                    Customer customer2 = new Customer();
+                    customer2.CustomerId = CustId;
+                    customer2.CustomerName = CustName;
+                    customer2.City = city;
+                    customer2.Age = age;
+                    customer2.Phone = phone;
+                    customer2.PinCode = pinCode;
+
+                    customerList.Add(customer2);
+
+                    Console.Write(customer2.CustomerId + "   ");
+                    Console.Write(customer2.CustomerName + "   ");
+                    Console.Write(customer2.City + "   ");
+                    Console.Write(customer2.Age + "   ");
+                    Console.Write(customer2.Phone + "   ");
+                    Console.Write(customer2.PinCode + "   ");
+                    return true;
+                    //break;
+                }
+            }
+            return false;
+        }
+        public bool RemoveCustomer(int CustId)
+        {
+            foreach (var customer in customerList)
+            {
+                if (customer.CustomerId == CustId)
+                {
+                    customerList.Remove(customer);
+                  
+                    return true;
+                   // break;
+                }
+            }
+            return false;
+        }
+        public void showAllCustomers()
+        {
+            Console.Write("CustomerId" + "   ");
+            Console.Write("CustomerName" + "   ");
+            Console.Write("City" + "   ");
+            Console.Write("Age"+  "   ");
+            Console.Write("Phone" + "   ");
+            Console.Write("PinCode" + "   ");
+            Console.WriteLine();
+            foreach (var customer in customerList)
+            {
+                Console.Write(customer.CustomerId + "      ");
+                Console.Write(customer.CustomerName + "      ");
+                Console.Write(customer.City + "   ");
+                Console.Write(customer.Age + "   ");
+                Console.Write(customer.Phone + "   ");
+                Console.Write(customer.PinCode + "   ");
+                Console.WriteLine();
+            }
+        }
+        public void SearchCustomer(int CustId)
+        {
+            foreach (var customer in customerList)
+            {
+                if (customer.CustomerId == CustId)
+                {
+                    Console.Write(customer.CustomerId + "   ");
+                    Console.Write(customer.CustomerName + "   ");
+                    Console.Write(customer.City + "   ");
+                    Console.Write(customer.Age + "   ");
+                    Console.Write(customer.Phone + "   ");
+                    Console.Write(customer.PinCode + "   ");
+                    Console.WriteLine();
+
+                }
+            }
+        }
+    }
+    internal class Program
+    {
+
+        static void Main(string[] args)
+        {
+            CustomerManagement customerManagement = new CustomerManagement();
+            while(true)
+            {
+                Console.WriteLine("Enter number from 0 to 6 \n" +
+                    "1.Create Customer. \n" +
+                    "2.Modify Customer Details. \n" +
+                    "3.Remove Customer.\n"+
+                    "4.show All Customers.\n"+
+                    "5.Search Customer \n" +
+                    "6.Enter 0 To Exit(). \n" +
+                    "Enter your choice :");
+                int number=int.Parse(Console.ReadLine()); 
+                switch(number)
+                {
+                    case 1:
+                        Console.WriteLine("Enter Customer Id :");
+                        int CustId= int.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter Customer Name :");
+                        string CustomerName= Console.ReadLine();
+                        Console.WriteLine("Enter City Name :");
+                        string City= Console.ReadLine();
+                        Console.WriteLine("Enter Age :");
+                        int age = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter Phone Number :");
+                        long Phone= long.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter PinCode Number :");
+                        int PinCode= int.Parse(Console.ReadLine());
+
+                       bool status= customerManagement.CreateCustomer(CustId, CustomerName,City,age,Phone,PinCode);
+                        if (status)
+                            Console.WriteLine("Customer Created Successfully!");
+                        else
+                            Console.WriteLine("Something Went Wrong!");
+                        break;
+                        case 2:
+                        Console.WriteLine("Enter Customer Id to Modify:");
+                         CustId = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter Customer Name :");
+                         CustomerName = Console.ReadLine();
+                        Console.WriteLine("Enter City Name :");
+                         City = Console.ReadLine();
+                        Console.WriteLine("Enter Age :");
+                         age = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter Phone Number :");
+                         Phone = long.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter PinCode Number :");
+                         PinCode = int.Parse(Console.ReadLine());
+                        status = false;
+                         status = customerManagement.ModifyCustomerDetails(CustId, CustomerName, City, age, Phone, PinCode);
+                        if (status)
+                            Console.WriteLine("Customer Modified Successfully!");
+                        else
+                            Console.WriteLine("Something Went Wrong!");
+                        break;
+                    case 3:
+                        Console.WriteLine("Enter Customer Id to Remove:");
+                        CustId = int.Parse(Console.ReadLine());
+                        status = false;
+                        status = customerManagement.RemoveCustomer(CustId);
+                        if (status)
+                            Console.WriteLine("Customer Removed Successfully!");
+                        else
+                            Console.WriteLine("Something Went Wrong!");
+
+                        break;
+                    case 4:
+                        customerManagement.showAllCustomers();
+                        break;
+                    case 5:
+                        Console.WriteLine("Enter Customer Id to Remove:");
+                        CustId = int.Parse(Console.ReadLine());
+                        customerManagement.SearchCustomer(CustId);
+                        break;
+                    case 0:
+                        return;
+                }
+                Console.ReadLine();
+            }
+            
+        }
+    }
+}
